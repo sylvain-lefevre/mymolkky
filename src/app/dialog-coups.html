@@ -1,0 +1,13 @@
+<h2 md-dialog-title>Historique</h2>
+<md-dialog-content>
+<div *ngFor='let val of map.keys()'>
+	{{val}}
+	<ul>
+		<li *ngFor="let score of map.get(val); let i=index">coup {{i+1}} : {{score}}</li>
+	</ul>
+</div>
+</md-dialog-content>
+<md-dialog-actions>
+	<button md-button md-dialog-close>ok</button>
+</md-dialog-actions>
+

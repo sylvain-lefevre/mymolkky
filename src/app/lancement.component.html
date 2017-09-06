@@ -1,0 +1,84 @@
+<h2 align="center">Definition des joueurs</h2>
+<div class=' form-group row'>
+	<div class='col col-lg-12 col-md-12 col-sm-12 col-12' align="center">
+		<md-radio-group [(ngModel)]="typeEquipe"> <md-radio-button
+			*ngFor="let item of choix" [value]="item">{{item}}</md-radio-button>
+		</md-radio-group>
+	</div>
+</div>
+<div *ngIf="typeEquipe">
+	<form #heroForm="ngForm">
+		<div *ngIf="typeEquipe=='Equipe'; else elseBlock"
+			class=' form-group row'>
+			<div class='col col-lg-12 col-md-12 col-sm-12 col-12' align="center">
+				Par equipe</div>
+			<ngb-accordion #acc="ngbAccordion" class='col col-lg-12 col-md-12 col-sm-12 col-12'>
+				<ngb-panel class='col col-lg-12 col-md-12 col-sm-12 col-12 show active'
+					*ngFor="let equipe of equipes; let i = index; trackBy: trackByEquipe">
+					<ng-template ngbPanelTitle class='col col-lg-12 col-md-12 col-sm-12 col-12'> 
+							<md-card-header class='col col-lg-12 col-md-12 col-sm-12 col-12'>
+							<md-card-title>Equipe {{i+1}}</md-card-title>
+							<div align="right">
+								<md-icon
+									svgIcon="flecheHaut"></md-icon>
+							</div>
+							</md-card-header>
+					</ng-template> 
+					<ng-template ngbPanelContent class='col col-lg-12 col-md-12 col-sm-12 col-12'>
+						<div class='col col-lg-12 col-md-12 col-sm-12 col-12'
+							*ngFor="let joueur of equipe.joueurs; let j = index; trackBy: trackByJoueur">
+							<md-input-container class='col col-lg-9 col-md-9 col-sm-9 col-7'>
+							<input mdInput required [(ngModel)]="joueur.nom"
+								placeholder="Joueur {{j+1}}" name="Joueur{{j+1}}_{{i}}"> </md-input-container>
+							<button md-raised-button
+								class='col col-lg-1 col-md-1 col-sm-1 col-1'
+								(click)='enleverJoueurEquipe(i,j)'>
+								<md-icon svgIcon="delete"></md-icon>
+							</button>
+						</div>
+						<div class='col col-lg-12 col-md-12 col-sm-12 col-12 button-row'
+							align="center">
+							<button md-raised-button (click)="ajouterJoueurEquipe(i)">Ajouter joueur</button>
+						</div>
+					</ng-template> 
+				</ngb-panel>
+			</ngb-accordion>
+			<div class='col col-lg-12 col-md-12 col-sm-12 col-12 button-row equipes'
+				align="center">
+				<button md-raised-button (click)="ajouterEquipe()">Ajouter Equipe</button>
+			</div>
+		</div>
+		<ng-template #elseBlock class=' form-group row'>
+		<div class='col col-lg-12 col-md-12 col-sm-12 col-12' align="center">
+			Par joueur</div>
+		<div class='col col-lg-12 col-md-12 col-sm-12 col-12'
+			*ngFor="let joueur of joueurs; let i = index; trackBy: trackByJoueur">
+			<md-input-container class='col col-lg-8 col-md-8 col-sm-8 col-8'>
+			<input required mdInput [(ngModel)]="joueur.nom"
+				placeholder="Joueur {{i+1}}" name="Joueur{{i+1}}"> </md-input-container>
+
+			<button md-raised-button class='col col-lg-1 col-md-1 col-sm-1 col-1'
+				(click)='enleverJoueur(i)'>
+				<md-icon svgIcon="delete"></md-icon>
+			</button>
+		</div>
+		<div class='col col-lg-12 col-md-12 col-sm-12 col-12 button-row'
+			align="center">
+			<button md-raised-button (click)="ajouterJoueur()">Ajouter
+				joueur</button>
+		</div>
+		<div class='col col-lg-12 col-md-12 col-sm-12 col-12' align="left">
+			<md-checkbox [checked]="aleatoire" [(ngModel)]="aleatoire" name="Aleatoire">Creation equipe aleatoire</md-checkbox>
+		</div>
+		<div *ngIf="aleatoire" class='col col-lg-12 col-md-12 col-sm-12 col-12' align="left">
+			<md-input-container class='col col-lg-12 col-md-12 col-sm-12 col-12'>
+			<input required mdInput [(ngModel)]="nbJoueur"
+				placeholder="Nombre equipe" name="JoueurEquipe" type="number"> </md-input-container>
+		</div>
+		</ng-template>
+		<div class='col col-lg-12 col-md-12 col-sm-12 col-12' align="center">
+			<button class="btn btn-4 btn-4c icon-arrow-right"
+				(click)="toSettings()" [disabled]="!heroForm.form.valid">continue</button>
+		</div>
+	</form>
+</div>

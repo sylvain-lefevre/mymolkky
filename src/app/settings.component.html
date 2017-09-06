@@ -1,0 +1,18 @@
+<h2 align="center">Definition des regles complementaires</h2>
+<div class=' form-group row'>
+	<div class='col col-lg-12 col-md-12 col-sm-12 col-12' align="left">
+		<md-checkbox [checked]="elimination" [(ngModel)]="elimination">Elimination apres 3 zero</md-checkbox>
+	</div>
+	<div class='col col-lg-12 col-md-12 col-sm-12 col-12' align="left">
+		<md-checkbox [checked]="annonce" [(ngModel)]="annonce">Annonce du score</md-checkbox>
+	</div>
+</div>
+<div class=' form-group row'>
+	<div class='col col-lg-6 col-md-6 col-sm-6 col-12' align="center">
+		<button class="btn btn-4 btn-4d icon-arrow-left" (click)="goBack()">back</button>
+	</div>
+	<div class='col col-lg-6 col-md-6 col-sm-6 col-12' align="center">
+		<button class="btn btn-4 btn-4c icon-arrow-right" (click)="launchGame()">start</button>
+	</div>
+</div>
+

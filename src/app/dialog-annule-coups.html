@@ -1,0 +1,9 @@
+<h2 md-dialog-title>Modification coup precedent</h2>
+<md-dialog-content>
+	<input #focusable mdInput [(ngModel)]="score"
+									placeholder="Score" name="Score" type="number" (keyup.enter)="valider()">
+</md-dialog-content>
+<md-dialog-actions>
+	<button md-button (click)="valider()">Valider</button>
+</md-dialog-actions>
+

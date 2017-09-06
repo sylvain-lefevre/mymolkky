@@ -1,0 +1,62 @@
+<h2 align="center">Game</h2>
+<div class=' form-group row'>
+	<div class='col col-lg-3 col-md-12 col-sm-12 col-12 button-row' align="left">
+		<span>Regles : </span>
+		
+		<ul *ngIf="game.regles && game.regles.length>0; else elseRegle" >
+			<li  *ngFor="let regle of game.regles" >{{regle}}</li>
+			
+		</ul>
+		<ng-template #elseRegle>
+			<ul>
+				<li>Aucune regle de selectionnee</li>
+			</ul>
+		</ng-template>
+		
+	</div>
+	<div class='col col-lg-6 col-md-8 col-sm-8 col-12' align="center">
+		<h3 align="center">{{message}}</h3>
+		<div *ngIf="!gameover; else finGame" class='col col-lg-6 col-md-8 col-sm-8 col-12' align="center">
+			<h3 align="center">Tour {{game.numTour}}</h3>
+			<h3 align="center">Joueur : {{game.joueurSuivant.nom}}</h3>
+			<h4 align="center">{{messageJoueur}}</h4>
+			<md-input-container *ngIf="game.regles.includes('Annonce du score')" class='col col-lg-10 col-md-10 col-sm-10 col-8'>
+				<input mdInput [(ngModel)]="annonce"
+									placeholder="Annonce" name="Annonce" type="number" >
+			</md-input-container>
+			<md-input-container class='col col-lg-10 col-md-10 col-sm-10 col-8'>
+				<input #focusable mdInput [(ngModel)]="score"
+									placeholder="Score" name="Score" type="number" (keyup.enter)="validateScore()"> 
+			</md-input-container>
+			<div class='col col-lg-6 col-md-8 col-sm-8 col-12 button-row' align="center">
+				<button class="btn btn-4 btn-4c icon-arrow-right" (focus)="validateScore($event, focusable)"
+					(click)="validateScore($event, focusable)" >OK</button>
+			</div>
+		</div>
+		<ng-template #finGame class='col col-lg-6 col-md-8 col-sm-8 col-12 button-row' align="center">
+			<button class="btn btn-4 btn-4c icon-arrow-right"
+					(click)="openDialogRestart()" >Restart</button>
+			<button class="btn btn-4 btn-4c icon-arrow-right"
+					(click)="newGame()" >New game</button>
+		</ng-template>
+	</div>
+	<div class='col col-lg-3 col-md-4 col-sm-4 col-12 button-row' align="left">
+		<h3 align="center">Scores</h3>
+		<div *ngIf="game.gameType==='Individuel'; else blockEquipe">
+			<ul >
+				<li   [ngClass]="{'barre': joueur.eliminate}" *ngFor="let joueur of game.joueurs">{{joueur.nom}} : {{joueur.score}}  ({{joueur.precedent.join('/')}})</li>
+			</ul>
+		</div>
+		<ng-template #blockEquipe>
+			<div *ngFor='let equipe of game.equipes; let i=index'>
+				Equipe {{equipe.id+1}} : {{equipe.score}}  ({{equipe.precedent.join('/')}})
+				<ul >
+					<li   [ngClass]="{'barre': joueur.eliminate}" *ngFor="let joueur of equipe.joueurs">{{joueur.nom}} : {{joueur.score}}</li>
+				</ul>
+			</div>
+		</ng-template>
+		<button md-button (click)="openDialogCoups()">Historique des coups</button>
+		<button md-button (click)="openDialogAnnuleCoups()">Modifier coup precedent</button>
+	</div>
+</div>
+

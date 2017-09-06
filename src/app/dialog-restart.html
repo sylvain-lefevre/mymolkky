@@ -1,0 +1,12 @@
+<h2 md-dialog-title>Restart</h2>
+<md-dialog-content>Quel joueur commencera?</md-dialog-content>
+<md-dialog-actions>
+  <button md-button (click)="meme()">Le meme</button>
+  <button md-button (click)="suivant()">Le suivant</button>
+  <div *ngIf="game.gameType==='Individuel'; else blockEquipe">
+  	<button *ngFor="let joueur of game.joueurs; let i=index" md-button [md-dialog-close]='i'>{{joueur.nom}}</button>
+  </div>
+  <ng-template #blockEquipe>
+  	<button *ngFor="let equipe of game.equipes; let i=index" md-button [md-dialog-close]='i'>Equipe {{equipe.id+1}}</button>
+  </ng-template>
+</md-dialog-actions>
